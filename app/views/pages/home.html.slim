@@ -1,0 +1,37 @@
+
+/ .column.is-one-third
+- if @local_weathers.present?
+      .box
+        / table.table
+        /   thead
+        /     tr
+        /       th
+        /         | Temperature (°C)
+        /       th
+        /         | Humidity (%)
+        /       th
+        /         | Pressure (hPa)
+        /       th
+        /         | Time
+        /   tbody
+        /     - @local_weathers.each do |w|
+        /       tr
+        /         td
+        /           == w.temperature 
+        /         td
+        /           == w.humidity 
+        /         td  
+        /           == w.pressure 
+        /         td
+        /           == w.created_at.to_formatted_s(:short)
+        .columns 
+          .column
+            = render @latest
+          .column
+            .box
+              = line_chart @temperature_data
+            .box 
+              = line_chart @humidity_data
+            .box 
+              = line_chart @pressure_data, min: @pressure_min, max: @pressure_max
+  

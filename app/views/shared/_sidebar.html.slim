@@ -1,0 +1,27 @@
+/ nav.navbar[role="navigation" aria-label="main navigation"]
+/     .navbar-brand
+/         a.navbar-item[href="/"]
+/             img[src="https://picsum.photos/112/28" width="112" height="28"]
+/         a.navbar-burger[data-target="navbarBasicExample"]
+/             span [aria-hidden="true"]
+/             span
+/             span
+/         .navbar-menu
+/             .navbar-start
+/                 a.navbar-item[href="/"]
+/                     | Home
+/                 a.navbar-item[href="/about"]
+/                     | About
+.box
+    .menu
+        p.menu-label WeatherApp
+        ul.menu-list
+            li 
+                a.is-active[href="/"] Strona główna
+            li
+                a[href="/about"] Czujniki
+            li 
+                a[href="/about"] Pogoda
+            li 
+                button.button.is-small.is-light.is-fullwidth[data-controller="toggle-theme" data-action="click->toggle-theme#change"] Toggle Theme 
+                        

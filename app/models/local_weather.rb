@@ -1,0 +1,2 @@
+class LocalWeather < ApplicationRecord
+end
