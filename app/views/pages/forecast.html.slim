@@ -1,0 +1,18 @@
+.box
+	article.message.is-dark.is-medium
+		.message-header
+				p = @location
+		.message-body 
+			.columns
+				.column
+					p Today
+				.column	
+					= @today.strftime("%d %B")
+			.columns 
+				- @forecasts.each do |forecast|
+					.column
+						.box
+							p = "#{forecast.temperature}°C"
+							p
+								= image_tag forecast.condition
+							p.has-text-centered = forecast.time
