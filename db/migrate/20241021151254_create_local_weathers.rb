@@ -4,7 +4,7 @@ class CreateLocalWeathers < ActiveRecord::Migration[7.2]
       t.float :temperature
       t.float :humidity
       t.integer :pressure
-
+      
       t.timestamps
     end
   end

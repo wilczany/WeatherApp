@@ -3,11 +3,38 @@
 require 'sinatra'
 require 'json'
 
+
+# {
+#   "sensors": {
+#     "1": {
+#       "name": "czujnik1",
+#       "type": "indoor",
+#       "temp": " ",
+#       "humid": " ",
+#       "pressure": " "
+#     },
+#     "2": {
+#       "name": "czujnik2",
+#       "type": "outside",
+#       "temp": " ",
+#       "humid": " ",
+#       "pressure": " "
+#     }
+#   }
+# }
+
 get '/' do
   content_type :json
-  { temperature: rand(10.0..12.0).round(2),
-    humidity: rand(30..60).round(2),
-    pressure: rand(990..1010)
+  { 
+    sensors: {
+      1 => {
+        name: 'czujnik1',
+        type: 'indoor',
+        temp: rand(10.0..12.0).round(2),
+        humid: rand(30..60).round(2),
+        pressure: rand(990..1010)
+        }
+      }
   }.to_json
   # { :temperatue => 10.22 }.to_json
 end

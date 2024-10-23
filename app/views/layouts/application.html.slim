@@ -2,7 +2,7 @@ doctype html
 html data-theme="dark"
   head
     title
-    == content_for(:title) || "Weather App" 
+    / == content_for(:title) || "Weather App" 
     meta[name="viewport" content="width=device-width,initial-scale=1"]
     meta[name="apple-mobile-web-app-capable" content="yes"]
     == csrf_meta_tags
@@ -19,9 +19,6 @@ html data-theme="dark"
 
 
   body
-  script
-    | console.log('Hello from WeatherApp')
-  /  .section
   .columns
     .column.is-one-fifth
       ==render 'shared/sidebar'

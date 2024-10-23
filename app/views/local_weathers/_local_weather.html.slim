@@ -1,5 +1,21 @@
-
-.box
-    h2 Czujnik
-    p Temperatura: #{local_weather.temperature}°C
-    p Humidity: #{local_weather.humidity}%
+article.message.is-info  
+    .message-header
+        p Czujnik 1
+        p Na zewnątrz
+    .message-body
+        .columns 
+            .column.is-one-third
+                p.has-text-centered
+                    | Temperatura:
+                    br
+                    strong #{local_weather.temperature}°C
+            .column.is-one-third
+                p.has-text-centered
+                    | Ciśnienie:
+                    br
+                    strong #{local_weather.pressure}hPa
+            .column.is-one-third
+                p.has-text-centered
+                    | Wilgotność:
+                    br
+                    strong #{local_weather.humidity}
