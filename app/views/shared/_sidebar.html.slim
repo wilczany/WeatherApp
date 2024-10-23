@@ -14,14 +14,14 @@
 /                     | About
 .box
     .menu
-        p.menu-label WeatherApp
+        p.menu-label qWeatherApp
         ul.menu-list
-            li 
-                a.is-active[href="/"] Strona główna
+            li
+                a.[href="/", class="#{'is-active' if action_name == 'home'}"] Strona główna
             li
                 a[href="/about"] Czujniki
             li 
-                a[href="/forecast"] Pogoda
+                a[href="/forecast", class="#{'is-active' if action_name == 'forecast'}"] Pogoda
             li 
                 button.button.is-small.is-light.is-fullwidth[data-controller="toggle-theme" data-action="click->toggle-theme#change"] Toggle Theme 
                         
