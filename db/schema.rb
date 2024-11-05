@@ -27,6 +27,7 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_23_002749) do
   create_table "sensors", force: :cascade do |t|
     t.string "name"
     t.integer "location"
+    t.integer "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end

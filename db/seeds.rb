@@ -8,5 +8,6 @@
 #     MovieGenre.find_or_create_by!(name: genre_name)
 #   end
 
-Sensor.find_or_create_by!(name: 'czujnik1', location: :inside)
-Sensor.find_or_create_by!(name: 'czujnik2', location: :outside)
+Sensor.find_or_create_by!(name: 'czujnik1', location: :inside, state: :off)
+Sensor.find_or_create_by!(name: 'czujnik2', location: :outside, state: :off)
+Sensor.find_or_create_by!(name: 'czujnik3', location: :outside, state: :off)

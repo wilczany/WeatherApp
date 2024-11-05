@@ -14,4 +14,6 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#home"
   get "forecast" => "pages#forecast"
+
+  get "sensors" => "sensors#index"
 end

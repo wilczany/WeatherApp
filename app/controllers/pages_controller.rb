@@ -2,7 +2,7 @@ require "net/http"
 
 class PagesController < ApplicationController
   def home
-    @local_weathers = LocalWeather.all.order(created_at: :desc).limit(30)
+    @local_weathers = LocalWeather.all.order(created_at: :desc).limit(9)
 
     @temperature_data = Hash.new
     @humidity_data = Hash.new

@@ -1,7 +1,7 @@
 article.message.is-info  
     .message-header
-        p Czujnik 1
-        p Na zewnątrz
+        p Czujnik #{ local_weather.sensor_id}
+        p = Sensor.find(local_weather.sensor_id).location.capitalize
     .message-body
         .columns 
             .column.is-one-third
