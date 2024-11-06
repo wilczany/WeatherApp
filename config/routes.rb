@@ -15,5 +15,5 @@ Rails.application.routes.draw do
   root "pages#home"
   get "forecast" => "pages#forecast"
 
-  get "sensors" => "sensors#index"
+  resources :sensors
 end

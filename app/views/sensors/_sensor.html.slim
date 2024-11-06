@@ -1,3 +1,24 @@
-.box
-    p = sensor.name
-    p = sensor.location
+.container.my-4
+    = link_to sensor_path(sensor) do
+        article.message class=("is-#{sensor.on? ? 'success' : 'danger'}")
+            .message-header
+                p Czujnik: #{ sensor.name}
+                p = sensor.location.capitalize
+            .message-body
+                .level 
+                    - if sensor.on?
+                        .level-item.has-text-centered
+                            p
+                                | Temperatura:
+                                br
+                                strong #{sensor.latest_weather.temperature}°C
+                        .level-item.has-text-centered
+                            p
+                                | Ciśnienie:
+                                br
+                                strong #{sensor.latest_weather.pressure}hPa
+                        .level-item.has-text-centered
+                            p
+                                | Wilgotność:
+                                br
+                                strong #{sensor.latest_weather.humidity}

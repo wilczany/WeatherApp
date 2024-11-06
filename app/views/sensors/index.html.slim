@@ -1,16 +1,13 @@
 / = puts @sensors
 
-.box
-    .columns
-        - @sensors.in_groups(2, false).each do |group|
-            .column
-                - group.each do |sensor|
-                    .box
-                        p = sensor.name
-                        p = sensor.location
-                        p = sensor.state
+.columns
+    - @sensors.in_groups(2, false).each do |group|
+        .column
+            - group.each do |sensor|
+                = render sensor
 / - @sensors.each do |sensor|
 /     .box 
 /         p = sensor.name
 /         p = sensor.location
 /         p = sensor.state
+

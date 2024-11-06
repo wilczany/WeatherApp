@@ -1,0 +1,66 @@
+.columns
+	.column
+		section.hero.is-primary
+			.hero-body
+				p.title
+					= @sensor.name.capitalize
+					/ = @sensor.location
+		br
+		.box
+			table.table.is-fullwidth
+				tbody
+					tr
+						td
+							strong Nazwa:
+						td
+							= @sensor.name.capitalize
+					tr
+						td
+							strong Lokalizacja:
+						td
+							= @sensor.location
+					tr 
+						td 
+							strong Stan 
+						td
+							= @sensor.state
+					- if @latest.present?
+						tr 
+							td
+								strong Ostatnie pomiary:
+							td 
+								= @latest.created_at.strftime("%d-%m-%Y %k:%M")
+						tr
+							td 
+								strong Temperatura:
+							td
+								= @latest.temperature
+						tr
+							td 
+								strong Wilgotność:
+							td
+								= @latest.humidity
+						tr
+							td 
+								strong Ciśnienie:
+							td
+								= @latest.pressure
+								
+
+
+
+
+		/ button.button.is-primary[
+		/ 	data-controller="modal"
+		/ 	data-action="modal#show"
+		/ 	data-modal-dialog-param="contact_details_modal"
+		/ 	Show modal]
+
+		/ 	| View Details
+	.column
+		.box.my-2
+			= line_chart @temperature_data
+		.box.my-2
+			= line_chart @humidity_data
+		.box.my-2
+			= line_chart @pressure_data, min: nil, max: nil

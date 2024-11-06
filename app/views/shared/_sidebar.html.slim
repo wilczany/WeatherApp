@@ -1,29 +1,17 @@
-/ nav.navbar[role="navigation" aria-label="main navigation"]
-/     .navbar-brand
-/         a.navbar-item[href="/"]
-/             img[src="https://picsum.photos/112/28" width="112" height="28"]
-/         a.navbar-burger[data-target="navbarBasicExample"]
-/             span [aria-hidden="true"]
-/             span
-/             span
-/         .navbar-menu
-/             .navbar-start
-/                 a.navbar-item[href="/"]
-/                     | Home
-/                 a.navbar-item[href="/about"]
-/                     | About
-.box
+.box.m-4
     .menu
         p.menu-label WeatherApp
         ul.menu-list
             li
                 a.[href="/", class="#{'is-active' if action_name == 'home'}"] Strona główna
             li
-                a[href="/sensors"] Czujniki
+                a[href="/sensors", class="#{'is-active' if controller_name == 'sensors'}"] Czujniki
             li 
                 a[href="/forecast", class="#{'is-active' if action_name == 'forecast'}"] Pogoda
             li 
-                button.button.is-small.is-light.is-fullwidth[data-controller="toggle-theme" data-action="click->toggle-theme#change"] Toggle Theme 
+                button.button.is-small.is-light.is-fullwidth[
+                    data-controller="toggle-theme" data-action="click->toggle-theme#change"
+                    ] Toggle Theme 
 
 
  

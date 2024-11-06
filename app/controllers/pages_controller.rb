@@ -2,21 +2,26 @@ require "net/http"
 
 class PagesController < ApplicationController
   def home
-    @local_weathers = LocalWeather.all.order(created_at: :desc).limit(9)
-
-    @temperature_data = Hash.new
-    @humidity_data = Hash.new
-    @pressure_data = Hash.new
-    # @pressure_min = @local_weathers.minimum(:pressure) - 20
-    # @pressure_max = @local_weathers.maximum(:pressure) + 20
-
-    @latest = @local_weathers.first
-
-    @local_weathers.each do |record|
-      @temperature_data[record.created_at] = record.temperature
-      @humidity_data[record.created_at] = record.humidity
-      @pressure_data[record.created_at] = record.pressure
-    end
+    @local_weathers = LocalWeather.order(created_at: :desc).group_by(&:sensor_id).transform_values { |records| records.first(10) }
+    
+    @temperature_data = @local_weathers.map { |sensor_id, readings|
+    {
+      name: "#{Sensor.find(sensor_id).name}",
+      data: readings.map { |reading| [ reading.created_at, reading.temperature ] }
+    }
+  }
+  @humidity_data = @local_weathers.map { |sensor_id, readings|
+    {
+      name: "#{Sensor.find(sensor_id).name}",
+      data: readings.map { |reading| [ reading.created_at, reading.humidity ] }
+    }
+  }
+  @pressure_data = @local_weathers.map { |sensor_id, readings|
+    {
+      name: "#{Sensor.find(sensor_id).name}",
+      data: readings.map { |reading| [ reading.created_at, reading.pressure ] }
+    }
+  }
   end
 
   def forecast

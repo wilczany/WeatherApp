@@ -1,14 +1,9 @@
 
 / .column.is-one-third
 - if @local_weathers.present?
-      .box
-        .columns 
-          .column
-            = render @latest
-          .column
-            .box
-              = line_chart @temperature_data
-            .box 
-              = line_chart @humidity_data
-            .box 
-              = line_chart @pressure_data, min: nil, max: nil
+    .box.my-4
+      = line_chart @temperature_data
+    .box
+      = line_chart @humidity_data
+    .box 
+      = line_chart @pressure_data, min: nil, max: nil
