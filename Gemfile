@@ -60,7 +60,7 @@ end
 
 gem "rufus-scheduler", "~> 3.9"
 
-gem "sinatra", "~> 4.0"
+gem "sinatra", "~> 4.1"
 
 gem "slim", "~> 5.2"
 
