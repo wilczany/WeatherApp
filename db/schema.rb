@@ -10,9 +10,14 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema[7.2].define(version: 2024_10_23_002749) do
+ActiveRecord::Schema[8.0].define(version: 2024_11_13_104329) do
   # These are extensions that must be enabled in order to support this database
-  enable_extension "plpgsql"
+  enable_extension "pg_catalog.plpgsql"
+
+  # Custom types defined in this database.
+  # Note that some types may not work with other database engines. Be careful if changing database.
+  create_enum "location", ["inside", "outside"]
+  create_enum "state", ["on", "off"]
 
   create_table "local_weathers", force: :cascade do |t|
     t.float "temperature"
@@ -26,8 +31,8 @@ ActiveRecord::Schema[7.2].define(version: 2024_10_23_002749) do
 
   create_table "sensors", force: :cascade do |t|
     t.string "name"
-    t.integer "location"
-    t.integer "state"
+    t.enum "location", enum_type: "location"
+    t.enum "state", default: "off", enum_type: "state"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
   end
