@@ -1,7 +1,7 @@
 source "https://rubygems.org"
 
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.1"
+gem "rails", "~> 8.0.0"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use pg as the database for Active Record
@@ -60,7 +60,7 @@ end
 
 gem "rufus-scheduler", "~> 3.9"
 
-gem "sinatra", "~> 4.0"
+gem "sinatra", "~> 4.1"
 
 gem "slim", "~> 5.2"
 
