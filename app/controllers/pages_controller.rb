@@ -3,25 +3,16 @@ require "net/http"
 class PagesController < ApplicationController
   def home
     @local_weathers = LocalWeather.order(created_at: :desc).group_by(&:sensor_id).transform_values { |records| records.first(10) }
+
+    map_data(:temperature)
+    set_min_max(:temperature)
+
+    map_data(:humidity)
+    set_min_max(:humidity)
+
+    map_data(:pressure)
+    set_min_max(:pressure)
     
-    @temperature_data = @local_weathers.map { |sensor_id, readings|
-    {
-      name: "#{Sensor.find(sensor_id).name}",
-      data: readings.map { |reading| [ reading.created_at, reading.temperature ] }
-    }
-  }
-  @humidity_data = @local_weathers.map { |sensor_id, readings|
-    {
-      name: "#{Sensor.find(sensor_id).name}",
-      data: readings.map { |reading| [ reading.created_at, reading.humidity ] }
-    }
-  }
-  @pressure_data = @local_weathers.map { |sensor_id, readings|
-    {
-      name: "#{Sensor.find(sensor_id).name}",
-      data: readings.map { |reading| [ reading.created_at, reading.pressure ] }
-    }
-  }
   end
 
   def forecast
@@ -43,5 +34,28 @@ class PagesController < ApplicationController
         @forecasts << f
       end
     end
+  end
+
+  def map_data(data_type)
+    self.instance_variable_set(
+      "@#{data_type}_data",
+      @local_weathers.map { |sensor_id, readings|
+      {
+        name: "#{Sensor.find(sensor_id).name}",
+        data: readings.map { |reading| [ reading.created_at, reading.send(data_type) ] }
+      } }
+    )
+  end
+
+  def set_min_max(data_type)
+    global = @local_weathers.values.flatten.map(&data_type).compact
+    self.instance_variable_set(
+      "@#{data_type}_min",
+      global.min - 2
+    )
+    self.instance_variable_set(
+      "@#{data_type}_max",
+      global.max + 2
+    )
   end
 end
