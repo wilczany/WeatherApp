@@ -16,4 +16,5 @@ Rails.application.routes.draw do
   get "forecast" => "pages#forecast"
 
   resources :sensors
+  resources :local_weathers
 end

@@ -12,22 +12,22 @@ Sensor.find_or_create_by!(name: 'czujnik1', location: :inside, state: :off)
 Sensor.find_or_create_by!(name: 'czujnik2', location: :outside, state: :off)
 Sensor.find_or_create_by!(name: 'czujnik3', location: :outside, state: :off)
 
-10.times do |i |
-  timestamp = Time.now - 1.hour + i.minutes * 2
-  LocalWeather.create!(
-    temperature: rand(10..30),
-    humidity: rand(30..90),
-    pressure: rand(900..1100),
-    sensor: Sensor.find(1),
-    created_at: timestamp,
-    updated_at: timestamp
-  )
-  LocalWeather.create!(
-    temperature: rand(10..30),
-    humidity: rand(30..90),
-    pressure: rand(900..1100),
-    sensor: Sensor.find(2),
-    created_at: timestamp,
-    updated_at: timestamp
-  )
-end
+# 10.times do |i |
+#   timestamp = Time.now - 1.hour + i.minutes * 2
+#   LocalWeather.create!(
+#     temperature: rand(10..30),
+#     humidity: rand(30..90),
+#     pressure: rand(900..1100),
+#     sensor: Sensor.find(1),
+#     created_at: timestamp,
+#     updated_at: timestamp
+#   )
+#   LocalWeather.create!(
+#     temperature: rand(10..30),
+#     humidity: rand(30..90),
+#     pressure: rand(900..1100),
+#     sensor: Sensor.find(2),
+#     created_at: timestamp,
+#     updated_at: timestamp
+#   )
+# end

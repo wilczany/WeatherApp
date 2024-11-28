@@ -12,7 +12,6 @@ class PagesController < ApplicationController
 
     map_data(:pressure)
     set_min_max(:pressure)
-    
   end
 
   def forecast
