@@ -11,6 +11,7 @@ class LocalWeathersController < ApplicationController
     # Accept an array of local_weathers
     local_weathers = params[:local_weathers]
 
+    Sensor.update_all(state: :off)
     # Use .create for skipping invalid records
     begin
       local_weathers.each do |w_data|
@@ -23,6 +24,7 @@ class LocalWeathersController < ApplicationController
           sensor_id: w_data["sensor"].to_i,
           created_at: Time.now.change(usec: 0)
         )
+        Sensor.find(w_data["sensor"].to_i).update(state: :on)
       end
 
     rescue ActiveRecord::RecordInvalid => e

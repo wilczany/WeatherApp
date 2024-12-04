@@ -15,6 +15,8 @@ Rails.application.routes.draw do
   root "pages#home"
   get "forecast" => "pages#forecast"
 
+  # get "pages/temperatures", to: "pages#temperatures_chart"
+
   resources :sensors
   resources :local_weathers
 end
