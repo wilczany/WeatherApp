@@ -1,6 +1,6 @@
 class Sensor < ApplicationRecord
-  enum location: [ :inside, :outside ]
-  enum state: [ :on, :off ]
+  enum :location, { inside: 0, outside: 1 }
+  enum :state, { on: 0, off: 1 }
   has_many :local_weathers
 
   def latest_weather
