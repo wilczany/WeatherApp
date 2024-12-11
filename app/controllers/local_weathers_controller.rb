@@ -16,7 +16,9 @@ class LocalWeathersController < ApplicationController
     begin
       local_weathers.each do |w_data|
         puts "w_data: #{w_data}"
-
+        if w_data["pressure"].to_i == 0
+          next
+        end
         LocalWeather.create!(
           temperature: w_data["temperature"].to_f,
           humidity: w_data["humidity"].to_f,
@@ -33,8 +35,19 @@ class LocalWeathersController < ApplicationController
         details: e.message
       }, status: :unprocessable_entity
     end
-    render json: {
-      success: true
-    }, status: :ok
+
+    # update charts
+    #
+    # Trigger Turbo update
+    # Turbo::StreamsChannel.broadcast_replace_to(
+    #   "charts",
+    #   target: "charts",
+    #   partial: "pages/charts",
+    #   locals: { local_weathers: @local_weathers }
+    # )
+    # # render json for success
+    # render json: {
+    #   success: true
+    # }, status: :ok
   end
 end

@@ -2,8 +2,11 @@
 / .column.is-one-third
 - if @local_weathers.present?
     .box.my-4
-      = line_chart @temperature_data
+      = line_chart @temperature_data, min: @temperature_min, max: @temperature_max
     .box
-      = line_chart @humidity_data
+      = line_chart @humidity_data, min: @humidity_min, max: @humidity_max
     .box 
-      = line_chart @pressure_data, min: nil, max: nil
+      = line_chart @pressure_data, min: @pressure_min, max: @pressure_max
+- else
+  .notification 
+    | No data available

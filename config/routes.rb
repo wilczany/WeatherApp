@@ -14,6 +14,7 @@ Rails.application.routes.draw do
   # Defines the root path route ("/")
   root "pages#home"
   get "forecast" => "pages#forecast"
+  get "update_charts", to: "pages#update_charts"
 
   # get "pages/temperatures", to: "pages#temperatures_chart"
 

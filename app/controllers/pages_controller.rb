@@ -2,16 +2,20 @@ require "net/http"
 
 class PagesController < ApplicationController
   def home
-    @local_weathers = LocalWeather.order(created_at: :desc).group_by(&:sensor_id).transform_values { |records| records.first(10) }
+    # @local_weathers = LocalWeather.order(created_at: :desc).group_by(&:sensor_id).transform_values { |records| records.first(10) }
+    # @local_weathers = LocalWeather.order(created_at: :desc).first(18).group_by(&:sensor_id)
+    minutes_ago = 10.minutes.ago
+    @local_weathers = LocalWeather.where("created_at >= ?", minutes_ago).order(created_at: :desc).group_by(&:sensor_id)
+    unless @local_weathers.empty?
+      map_data(:temperature)
+      set_min_max(:temperature)
 
-    map_data(:temperature)
-    set_min_max(:temperature)
+      map_data(:humidity)
+      set_min_max(:humidity)
 
-    map_data(:humidity)
-    set_min_max(:humidity)
-
-    map_data(:pressure)
-    set_min_max(:pressure)
+      map_data(:pressure)
+      set_min_max(:pressure)
+    end
   end
 
   def forecast
@@ -35,6 +39,24 @@ class PagesController < ApplicationController
     end
   end
 
+  def update_charts
+    minutes_ago = 5.minutes.ago
+    @local_weathers = LocalWeather.where("created_at >= ?", minutes_ago).order(created_at: :desc).group_by(&:sensor_id)
+
+    map_data(:temperature)
+    set_min_max(:temperature)
+
+    map_data(:humidity)
+    set_min_max(:humidity)
+
+    map_data(:pressure)
+    set_min_max(:pressure)
+
+    respond_to do |format|
+      format.turbo_stream
+    end
+  end
+
   def map_data(data_type)
     self.instance_variable_set(
       "@#{data_type}_data",
@@ -47,14 +69,15 @@ class PagesController < ApplicationController
   end
 
   def set_min_max(data_type)
+    diff = 2
     global = @local_weathers.values.flatten.map(&data_type).compact
     self.instance_variable_set(
       "@#{data_type}_min",
-      global.min - 2
+      global.min - diff
     )
     self.instance_variable_set(
       "@#{data_type}_max",
-      global.max + 2
+      global.max + diff
     )
   end
 end
