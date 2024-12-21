@@ -2,7 +2,7 @@
 / .column.is-one-third
 - if @local_weathers.present?
     .box.my-4
-      = line_chart @temperature_data, min: @temperature_min, max: @temperature_max
+      = line_chart @temperature_data, min: @temperature_min, max: @temperature_max, spanGaps: true
     .box
       = line_chart @humidity_data, min: @humidity_min, max: @humidity_max
     .box 

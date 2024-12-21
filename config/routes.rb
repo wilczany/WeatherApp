@@ -17,7 +17,8 @@ Rails.application.routes.draw do
   get "update_charts", to: "pages#update_charts"
 
   # get "pages/temperatures", to: "pages#temperatures_chart"
-
+  
+  get "sensors/frequency", to: "sensors#frequency"
   resources :sensors
   resources :local_weathers
 end

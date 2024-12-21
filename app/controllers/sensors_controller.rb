@@ -18,4 +18,12 @@ class SensorsController < ApplicationController
             [ reading.created_at, reading.pressure ]
         }
     end
+
+    def frequency
+        data = Sensor.all.map do |sensor|
+          {sensor.id => sensor.frequency}
+        end
+
+        render json: data
+    end
 end
