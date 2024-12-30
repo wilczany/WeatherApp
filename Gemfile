@@ -64,7 +64,7 @@ gem "sinatra", "~> 4.0"
 
 gem "slim", "~> 5.2"
 
-gem "slim-rails", "~> 3.6"
+gem "slim-rails", "~> 3.7"
 
 gem "chartkick", "~> 5.1"
 
