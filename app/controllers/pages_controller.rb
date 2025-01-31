@@ -2,9 +2,9 @@ require "net/http"
 
 class PagesController < ApplicationController
   def home
-    # @local_weathers = LocalWeather.order(created_at: :desc).group_by(&:sensor_id).transform_values { |records| records.first(10) }
     # @local_weathers = LocalWeather.order(created_at: :desc).first(18).group_by(&:sensor_id)
-    minutes_ago = 10.minutes.ago
+    @time = params[:minutes_ago]&.to_i|| 10
+    minutes_ago = @time.minutes.ago
     @local_weathers = LocalWeather.where("created_at >= ?", minutes_ago).order(created_at: :desc).group_by(&:sensor_id)
     unless @local_weathers.empty?
       map_data(:temperature)

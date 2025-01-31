@@ -26,4 +26,23 @@ class SensorsController < ApplicationController
 
         render json: data
     end
+
+    def edit
+        @sensor = Sensor.find(params[:id])
+    end
+
+    def update
+        @sensor = Sensor.find(params[:id])
+        if @sensor.update(sensor_params)
+            redirect_to @sensor, notice: 'Sensor was successfully updated.'
+        else
+            render :edit
+        end
+    end
+
+    private
+
+    def sensor_params
+        params.require(:sensor).permit(:name, :location, :frequency)
+    end
 end

@@ -16,5 +16,5 @@ s.every "5m" do
       Sensor.find(record.sensor_id).update(state: :off)
     end
   end
-  puts "########\n#UPDATED SENSORS\n########"
+  puts "###\n#UPDATED SENSORS\n###"
 end

@@ -69,3 +69,5 @@ gem "slim-rails", "~> 3.6"
 gem "chartkick", "~> 5.1"
 
 gem "solargraph", "~> 0.50.0"
+
+gem "groupdate", "~> 6.5"

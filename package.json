@@ -8,10 +8,10 @@
   "dependencies": {
     "@hotwired/stimulus": "^3.2.2",
     "@hotwired/turbo-rails": "^8.0.12",
-    "bulma": "^1.0.2",
+    "bulma": "^1.0.3",
     "bulma-switch": "^2.0.4",
-    "chart.js": "^4.4.5",
+    "chart.js": "^4.4.7",
     "chartkick": "^5.0.1",
-    "sass": "^1.80.3"
+    "sass": "^1.83.4"
   }
 }

@@ -1,0 +1,26 @@
+h1 Edit Sensor
+
+= form_with(model: @sensor, local: true) do |form|
+  - if @sensor.errors.any?
+    #error_explanation
+      h2 = pluralize(@sensor.errors.count, "error") + " prohibited this sensor from being saved:"
+      ul
+        - @sensor.errors.full_messages.each do |message|
+          li = message
+
+  .field
+    = form.label :name
+    = form.text_field :name
+
+  .field
+    = form.label :location
+    = form.select :location, [['Inside', 'inside'], ['Outside', 'outside']]
+
+  .field
+    = form.label :frequency
+    = form.number_field :frequency
+
+  .actions
+    = form.submit
+
+= link_to 'Back', sensors_path

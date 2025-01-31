@@ -24,6 +24,11 @@
 							strong Stan 
 						td
 							= @sensor.state
+					tr 
+						td 
+							strong Częstotliwość:
+						td
+							= @sensor.frequency
 					- if @latest.present?
 						tr 
 							td
@@ -47,8 +52,7 @@
 								= @latest.pressure
 								
 
-
-
+		= link_to 'Edytuj', edit_sensor_path(@sensor), class: 'btn btn-primary'
 
 		/ button.button.is-primary[
 		/ 	data-controller="modal"
