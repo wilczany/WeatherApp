@@ -20,53 +20,66 @@
 /               p.subtitle.is-6 = forecast.time
 
 section.section
+  - if flash[:notice]
+    .notification.is-primary.has-text-centered.my-4
+        h1.title.is-4 =flash[:notice]
   .container
-    h1.title.is-2.has-text-centered
-      | Weather in #{@location}
+    .columns 
+      .column
+        h1.title.is-2.has-text-centered
+          | Pogoda w #{@location}
+      .column 
+        = form_with url: forecast_path, method: :get, local: true do |form|
+          .field.has-addons.has-addons-centered
+            .control
+              = form.text_field :city, placeholder: 'Podaj nazwę miasta', class: 'input'
+            .control
+              = form.submit 'Search', class: 'button is-info'
+        
     
     / Current Weather Card
-    .box.mb-6
+    .box.is-info
       .columns.is-vcentered
         .column.is-4
           .has-text-centered
             figure.image.is-96x96.is-inline-block
               img src=@current_weather[:icon] alt="Weather condition"
             p.title.is-1 = "#{@current_weather[:temp_c]}°C"
-            p.subtitle.is-4 = @current_weather[:condition]
-            p.is-size-5 = "Feels like: #{@current_weather[:feels_like]}°C"
+            / p.subtitle.is-4 = @current_weather[:condition]
+            p.is-size-5 = "Odczuwalna: #{@current_weather[:feels_like]}°C"
         
         .column.is-8
           .columns.is-multiline
             .column.is-6
-              .notification.is-light
-                p.heading Wind
+              .notification.is-info
+                p.heading Wiatr
                 p.title.is-4 = "#{@current_weather[:wind_kph]} km/h #{@current_weather[:wind_dir]}"
             
             .column.is-6
-              .notification.is-light
-                p.heading Humidity
+              .notification.is-info
+                p.heading Wilgotność
                 p.title.is-4 = "#{@current_weather[:humidity]}%"
             
             .column.is-6
-              .notification.is-light
-                p.heading Pressure
-                p.title.is-4 = "#{@current_weather[:pressure_mb]} mb"
+              .notification.is-info
+                p.heading Ciśnienie
+                p.title.is-4 = "#{@current_weather[:pressure_mb]} hPa"
             
             .column.is-6
-              .notification.is-light
+              .notification.is-info
                 p.heading Last Updated
-                p.title.is-4 = @today.strftime("%H:%M")
+                p.title.is-4 = "#{@current_weather[:last_updated]}"
 
-    / 7-Day Forecast
-    h2.title.is-4.mb-4 7-Day Forecast
+
+    h2.title.is-4.mb-4.my-4 Prognoza na 3 dni
     .columns.is-multiline
       - @forecasts.each do |forecast|
-        .column.is-12-mobile.is-6-tablet.is-3-desktop
+        .column.is-3
           .box
             .has-text-centered
               p.is-size-5.mb-2
-                strong = forecast[:date].strftime("%A")
-              p.is-size-6.mb-3 = forecast[:date].strftime("%B %d")
+                strong = I18n.l(forecast[:date], format: '%A').capitalize
+              p.is-size-6.mb-3 = I18n.l(forecast[:date], format: "%d %B ").capitalize
               figure.image.is-48x48.is-inline-block
                 img src=forecast[:icon] alt="Weather condition"
               p.subtitle.is-6.mt-2 = forecast[:condition]

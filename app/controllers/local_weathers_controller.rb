@@ -52,6 +52,9 @@ class LocalWeathersController < ApplicationController
     end
     # @weather = LocalWeather.new(local_weather_params.merge(created_at: Time.now.change(usec: 0)))
     @weather = LocalWeather.new(local_weather_params)
+    
+    sensor = Sensor.find(local_weather_params[:sensor_id])
+    sensor.update(state: :on)
 
     if @weather.save
       render json: @weather, status: :created

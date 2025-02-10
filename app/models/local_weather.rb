@@ -3,8 +3,6 @@ class LocalWeather < ApplicationRecord
 
   after_create_commit -> { broadcast_weather_update }
 
-  
-
   private
 
   def broadcast_weather_update

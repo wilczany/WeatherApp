@@ -19,28 +19,38 @@ class PagesController < ApplicationController
   end
 
   def forecast
+    require 'i18n'
+    city = !params[:city].nil? ? I18n.transliterate(params[:city]) : "Bialystok"
+    # city = "Bialystok"
+    puts "City: #{city}"
     api_key = Rails.application.credentials.user.weather_api_key
     # Change days parameter to 7
-    uri = URI("http://api.weatherapi.com/v1/forecast.json?key=#{api_key}&q=Bialystok&days=7&aqi=no&alerts=no")
+    uri = URI("http://api.weatherapi.com/v1/forecast.json?key=#{api_key}&q=#{city}&days=7&aqi=no&alerts=no")
 
     response = Net::HTTP.get_response(uri)
     body = JSON.parse(response.body)
-
+    puts "Response code: #{response.code}"
+    if response.code != "200"
+      redirect_to forecast_path, notice: "City not found"
+      return
+    end
     @location = body["location"]["name"]
     @today = body["current"]["last_updated"].to_time
-
+    current = body["current"]
     @current_weather = {
-      temp_c: body["current"]["temp_c"],
-      condition: body["current"]["condition"]["text"],
-      icon: body["current"]["condition"]["icon"],
-      feels_like: body["current"]["feelslike_c"],
-      wind_kph: body["current"]["wind_kph"],
-      wind_dir: body["current"]["wind_dir"],
-      humidity: body["current"]["humidity"],
-      pressure_mb: body["current"]["pressure_mb"]
+      temp_c: current["temp_c"],
+      condition: current["condition"]["text"],
+      icon: current["condition"]["icon"],
+      feels_like: current["feelslike_c"],
+      wind_kph: current["wind_kph"],
+      wind_dir: current["wind_dir"],
+      humidity: current["humidity"],
+      pressure_mb: current["pressure_mb"],
+      last_updated: current["last_updated"].to_time.strftime("%H:%M")
+
     }
 
-    # Get 7-day forecast data
+    # Get 3-day forecast data
     @forecasts = body["forecast"]["forecastday"].map do |day|
       {
         date: day["date"].to_date,
@@ -55,6 +65,7 @@ class PagesController < ApplicationController
       }
     end
   end
+
   def update_charts
     minutes_ago = 5.minutes.ago
     @local_weathers = LocalWeather.where("created_at >= ?", minutes_ago).order(created_at: :desc).group_by(&:sensor_id)
@@ -96,4 +107,6 @@ class PagesController < ApplicationController
       global.max + diff
     )
   end
+  private
+  
 end

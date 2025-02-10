@@ -62,7 +62,21 @@
 		/ 	Show modal]
 
 		/ 	| View Details
+
+	
 	.column
+		
+		= form_with url: sensor_path, method: :get, class: "is-flex", data: { turbo: true } do |f|
+			.control
+			= f.number_field :minutes_ago, 
+				value: @time,
+				min: 1, 
+				max: 1440, 
+				placeholder: "Dane z zakresu w minutach",
+				class: "input"
+			.control
+			= f.button "Zaktualizuj zakres", 
+				class: "button is-info"
 		.box.my-2
 			= line_chart @temperature_data
 		.box.my-2

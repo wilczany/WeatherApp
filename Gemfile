@@ -72,3 +72,5 @@ gem "chartkick"
 gem "solargraph", "~> 0.50.0"
 
 # gem "groupdate", "~> 6.5"
+
+gem "rails-i18n", "~> 8.0"
