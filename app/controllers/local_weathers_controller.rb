@@ -50,7 +50,8 @@ class LocalWeathersController < ApplicationController
       render json: { error: "Last measurement was less than 1 minute ago" }, status: :unprocessable_entity
       return
     end
-    @weather = LocalWeather.new(local_weather_params.merge(created_at: Time.now.change(usec: 0)))
+    # @weather = LocalWeather.new(local_weather_params.merge(created_at: Time.now.change(usec: 0)))
+    @weather = LocalWeather.new(local_weather_params)
 
     if @weather.save
       render json: @weather, status: :created

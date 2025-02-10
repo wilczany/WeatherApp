@@ -1,12 +1,9 @@
 class LocalWeather < ApplicationRecord
   belongs_to :sensor
 
-  # after_create_commit -> {
-  #   broadcast_replace_to "local_weather",
-  #   target: "weather_charts",
-  #   partial: "pages/weather_charts" }
-
   after_create_commit -> { broadcast_weather_update }
+
+  
 
   private
 
@@ -19,7 +16,7 @@ class LocalWeather < ApplicationRecord
     return if local_weathers.empty?
 
     broadcast_replace_to "weather_charts",
-      target: "weather_charts_frame", # Ensure this matches the Turbo Frame ID in your view
+      target: "weather_charts_frame",
       partial: "pages/weather_charts",
       locals: {
         local_weathers: local_weathers,

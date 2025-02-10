@@ -12,6 +12,7 @@
     "bulma-switch": "^2.0.4",
     "chart.js": "^4.4.7",
     "chartkick": "^5.0.1",
+    "highcharts": "^12.1.2",
     "sass": "^1.83.4"
   }
 }

@@ -1,17 +1,96 @@
-article.message.is-link.is-medium
-	.message-header
-			p = @location
-	.message-body 
-		.columns
-			.column
-				p Today
-			.column	
-				= @today.strftime("%d %B")
-		.columns 
-			- @forecasts.each do |forecast|
-				.column
-					.box
-						p = "#{forecast.temperature}°C"
-						p
-							= image_tag forecast.condition
-						p.has-text-centered = forecast.time
+/ / [app/views/forecast.html.slim](app/views/forecast.html.slim)
+/ article.card
+/   header.card-header
+/     p.card-header-title = @location
+/   .card-content
+/     .content
+/       .columns.is-mobile.is-vcentered
+/         .column.has-text-left
+/           p.title.is-4 Today
+/         .column.has-text-right2
+/           p.subtitle.is-5 = @today.strftime("%d %B")
+/       hr
+/       .columns.is-multiline
+/         - @forecasts.each do |forecast|
+/           .column.is-one-quarter
+/             .box.has-text-centered
+/               p.title.is-5 = "#{forecast.temperature}°C"
+/               figure.image.is-64x64
+/                 = image_tag forecast.condition
+/               p.subtitle.is-6 = forecast.time
+
+section.section
+  .container
+    h1.title.is-2.has-text-centered
+      | Weather in #{@location}
+    
+    / Current Weather Card
+    .box.mb-6
+      .columns.is-vcentered
+        .column.is-4
+          .has-text-centered
+            figure.image.is-96x96.is-inline-block
+              img src=@current_weather[:icon] alt="Weather condition"
+            p.title.is-1 = "#{@current_weather[:temp_c]}°C"
+            p.subtitle.is-4 = @current_weather[:condition]
+            p.is-size-5 = "Feels like: #{@current_weather[:feels_like]}°C"
+        
+        .column.is-8
+          .columns.is-multiline
+            .column.is-6
+              .notification.is-light
+                p.heading Wind
+                p.title.is-4 = "#{@current_weather[:wind_kph]} km/h #{@current_weather[:wind_dir]}"
+            
+            .column.is-6
+              .notification.is-light
+                p.heading Humidity
+                p.title.is-4 = "#{@current_weather[:humidity]}%"
+            
+            .column.is-6
+              .notification.is-light
+                p.heading Pressure
+                p.title.is-4 = "#{@current_weather[:pressure_mb]} mb"
+            
+            .column.is-6
+              .notification.is-light
+                p.heading Last Updated
+                p.title.is-4 = @today.strftime("%H:%M")
+
+    / 7-Day Forecast
+    h2.title.is-4.mb-4 7-Day Forecast
+    .columns.is-multiline
+      - @forecasts.each do |forecast|
+        .column.is-12-mobile.is-6-tablet.is-3-desktop
+          .box
+            .has-text-centered
+              p.is-size-5.mb-2
+                strong = forecast[:date].strftime("%A")
+              p.is-size-6.mb-3 = forecast[:date].strftime("%B %d")
+              figure.image.is-48x48.is-inline-block
+                img src=forecast[:icon] alt="Weather condition"
+              p.subtitle.is-6.mt-2 = forecast[:condition]
+            
+            .mt-4
+              .columns.is-mobile
+                .column.is-6
+                  p.heading High
+                  p.title.is-5 = "#{forecast[:max_temp]}°C"
+                .column.is-6
+                  p.heading Low
+                  p.title.is-5 = "#{forecast[:min_temp]}°C"
+            
+            .mt-3
+              .level.is-mobile
+                .level-item.has-text-centered
+                  div
+                    p.heading Wind
+                    p.is-size-6 = "#{forecast[:max_wind]} km/h"
+                .level-item.has-text-centered
+                  div
+                    p.heading Rain
+                    p.is-size-6 = "#{forecast[:chance_of_rain]}%"
+                .level-item.has-text-centered
+                  div
+                    p.heading Humidity
+                    p.is-size-6 = "#{forecast[:humidity]}%"

@@ -5,6 +5,7 @@
 				p.title
 					= @sensor.name.capitalize
 					/ = @sensor.location
+				
 		br
 		.box
 			table.table.is-fullwidth
@@ -51,8 +52,8 @@
 							td
 								= @latest.pressure
 								
+			= link_to 'Edytuj', edit_sensor_path(@sensor), class: 'button is-primary'
 
-		= link_to 'Edytuj', edit_sensor_path(@sensor), class: 'btn btn-primary'
 
 		/ button.button.is-primary[
 		/ 	data-controller="modal"

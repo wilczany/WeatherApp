@@ -3,7 +3,7 @@ require "net/http"
 class PagesController < ApplicationController
   def home
     # @local_weathers = LocalWeather.order(created_at: :desc).first(18).group_by(&:sensor_id)
-    @time = params[:minutes_ago]&.to_i|| 10
+    @time = params[:minutes_ago]&.to_i|| 15
     minutes_ago = @time.minutes.ago
     @local_weathers = LocalWeather.where("created_at >= ?", minutes_ago).order(created_at: :desc).group_by(&:sensor_id)
     unless @local_weathers.empty?
@@ -20,25 +20,41 @@ class PagesController < ApplicationController
 
   def forecast
     api_key = Rails.application.credentials.user.weather_api_key
-    uri = URI("http://api.weatherapi.com/v1/forecast.json?key=#{api_key}&q=Bialystok&days=1&aqi=no&alerts=no")
+    # Change days parameter to 7
+    uri = URI("http://api.weatherapi.com/v1/forecast.json?key=#{api_key}&q=Bialystok&days=7&aqi=no&alerts=no")
 
     response = Net::HTTP.get_response(uri)
     body = JSON.parse(response.body)
 
-    data = body["forecast"]["forecastday"][0]["hour"]
     @location = body["location"]["name"]
     @today = body["current"]["last_updated"].to_time
 
-    @forecasts = []
+    @current_weather = {
+      temp_c: body["current"]["temp_c"],
+      condition: body["current"]["condition"]["text"],
+      icon: body["current"]["condition"]["icon"],
+      feels_like: body["current"]["feelslike_c"],
+      wind_kph: body["current"]["wind_kph"],
+      wind_dir: body["current"]["wind_dir"],
+      humidity: body["current"]["humidity"],
+      pressure_mb: body["current"]["pressure_mb"]
+    }
 
-    data.each do |d|
-      f = Forecast.new(d["time"].to_time, d["temp_c"], d["condition"]["icon"])
-      if f.time > Time.now.strftime("%H:%M")
-        @forecasts << f
-      end
+    # Get 7-day forecast data
+    @forecasts = body["forecast"]["forecastday"].map do |day|
+      {
+        date: day["date"].to_date,
+        max_temp: day["day"]["maxtemp_c"],
+        min_temp: day["day"]["mintemp_c"],
+        avg_temp: day["day"]["avgtemp_c"],
+        condition: day["day"]["condition"]["text"],
+        icon: day["day"]["condition"]["icon"],
+        max_wind: day["day"]["maxwind_kph"],
+        chance_of_rain: day["day"]["daily_chance_of_rain"],
+        humidity: day["day"]["avghumidity"]
+      }
     end
   end
-
   def update_charts
     minutes_ago = 5.minutes.ago
     @local_weathers = LocalWeather.where("created_at >= ?", minutes_ago).order(created_at: :desc).group_by(&:sensor_id)

@@ -1,7 +1,8 @@
 source "https://rubygems.org"
 
+ruby "3.4.1"
 # Bundle edge Rails instead: gem "rails", github: "rails/rails", branch: "main"
-gem "rails", "~> 7.2.1"
+gem "rails", "~> 8.0.1"
 # The original asset pipeline for Rails [https://github.com/rails/sprockets-rails]
 gem "sprockets-rails"
 # Use pg as the database for Active Record
@@ -66,8 +67,8 @@ gem "slim", "~> 5.2"
 
 gem "slim-rails", "~> 3.6"
 
-gem "chartkick", "~> 5.1"
+gem "chartkick"
 
 gem "solargraph", "~> 0.50.0"
 
-gem "groupdate", "~> 6.5"
+# gem "groupdate", "~> 6.5"

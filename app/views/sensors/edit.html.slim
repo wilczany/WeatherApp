@@ -1,26 +1,33 @@
-h1 Edit Sensor
+section.section
+  .container
+    h1.title.is-2 Edytuj czujnik: #{@sensor.id}
 
-= form_with(model: @sensor, local: true) do |form|
-  - if @sensor.errors.any?
-    #error_explanation
-      h2 = pluralize(@sensor.errors.count, "error") + " prohibited this sensor from being saved:"
-      ul
-        - @sensor.errors.full_messages.each do |message|
-          li = message
+    = form_with(model: @sensor, local: true) do |form|
+      - if @sensor.errors.any?
+        .notification.is-danger
+          h2.subtitle = pluralize(@sensor.errors.count, "błąd") + " uniemożliwił zapisanie czujnika:"
+          ul
+            - @sensor.errors.full_messages.each do |message|
+              li = message
 
-  .field
-    = form.label :name
-    = form.text_field :name
+      .field.my-2
+        = form.label :name, "Nazwa", class: "label"
+        .control
+          = form.text_field :name, class: "input"
 
-  .field
-    = form.label :location
-    = form.select :location, [['Inside', 'inside'], ['Outside', 'outside']]
+      .field.my-2
+        = form.label :location, "Lokalizacja", class: "label"
+        .control
+          .select
+            = form.select :location, [['Wewnątrz', 'inside'], ['Na zewnątrz', 'outside']]
 
-  .field
-    = form.label :frequency
-    = form.number_field :frequency
+      .field.my-2
+        = form.label :frequency, "Częstotliwość odczytu (sekundy)", class: "label"
+        .control
+          = form.number_field :frequency, class: "input"
 
-  .actions
-    = form.submit
-
-= link_to 'Back', sensors_path
+      .field.is-grouped.mt-5
+        .control
+          = form.submit "Zapisz zmiany", class: "button is-primary"
+        .control
+          = link_to "Powrót", sensors_path, class: "button is-light"
