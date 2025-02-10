@@ -21,8 +21,13 @@ class SensorsController < ApplicationController
 
     def frequency
         data = Sensor.all.map do |sensor|
-          {sensor.id => sensor.frequency}
+          { "S#{sensor.id}" => sensor.frequency }
         end
+        data = data.to_json
+
+        # ale nabroiłeś saku
+
+        response.headers.clear
 
         render json: data
     end
@@ -34,7 +39,7 @@ class SensorsController < ApplicationController
     def update
         @sensor = Sensor.find(params[:id])
         if @sensor.update(sensor_params)
-            redirect_to @sensor, notice: 'Sensor was successfully updated.'
+            redirect_to @sensor, notice: "Sensor was successfully updated."
         else
             render :edit
         end
