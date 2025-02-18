@@ -54,15 +54,6 @@
 								
 			= link_to 'Edytuj', edit_sensor_path(@sensor), class: 'button is-primary'
 
-
-		/ button.button.is-primary[
-		/ 	data-controller="modal"
-		/ 	data-action="modal#show"
-		/ 	data-modal-dialog-param="contact_details_modal"
-		/ 	Show modal]
-
-		/ 	| View Details
-
 	
 	.column
 		
@@ -75,11 +66,18 @@
 				placeholder: "Dane z zakresu w minutach",
 				class: "input"
 			.control
+			= f.datetime_select :start_time, 
+				value: @start_time,
+				class: "input"
+				min: 0.days.ago
 			= f.button "Zaktualizuj zakres", 
 				class: "button is-info"
-		.box.my-2
-			= line_chart @temperature_data
-		.box.my-2
-			= line_chart @humidity_data
-		.box.my-2
-			= line_chart @pressure_data, min: nil, max: nil
+		= turbo_frame_tag "weather_charts_frame" do
+			= render "shared/weather_charts", @data
+
+		/ .box.my-2
+		/ 	= line_chart @temperature_data
+		/ .box.my-2
+		/ 	= line_chart @humidity_data
+		/ .box.my-2
+		/ 	= line_chart @pressure_data, min: nil, max: nil

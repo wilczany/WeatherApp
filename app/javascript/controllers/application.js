@@ -8,5 +8,5 @@ window.Stimulus   = application
 
 export { application }
 
-console.warn("This is a warning!");
-
+// console.warn("This is a warning!");
+// console.log('HI :)');

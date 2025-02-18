@@ -5,10 +5,9 @@ class SensorsController < ApplicationController
 
     def show
         @sensor = Sensor.find(params[:id])
-        puts params[:minutes_ago]
-        puts "#######################"
         time_param = params[:minutes_ago]
-        time = time_param.to_i&.nonzero? || 20
+        # TODO: maybe 15 minutes since last reading?
+        time = time_param.to_i&.nonzero? || 60
         @weathers = @sensor.local_weathers.where("created_at >= ?", time.minutes.ago).order(created_at: :asc)
         @latest = @weathers.last
 
@@ -21,11 +20,13 @@ class SensorsController < ApplicationController
         @pressure_data = @weathers.map { |reading|
             [ reading.created_at, reading.pressure ]
         }
+
+        @data = LocalWeather.charts_data(time, params[:id])
     end
 
     def frequency
         data = Sensor.all.map do |sensor|
-          {sensor.id => sensor.frequency}
+          { sensor.id => sensor.frequency }
         end
         data = data.to_json
 
@@ -43,7 +44,7 @@ class SensorsController < ApplicationController
     def update
         @sensor = Sensor.find(params[:id])
         if @sensor.update(sensor_params)
-            redirect_to @sensor, notice: 'Sensor was successfully updated.'
+            redirect_to @sensor, notice: "Sensor was successfully updated."
         else
             render :edit
         end
