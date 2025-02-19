@@ -4,8 +4,9 @@ class LocalWeather < ApplicationRecord
 
   after_create_commit -> { broadcast_weather_update }
 
-  def self.charts_data(time = 10, sensor_id = nil)
-    query = LocalWeather.where("created_at >= ?", time.minutes.ago)
+  def self.charts_data(sensor_id = nil, start_time = 30.minutes.ago, end_time = Time.now)
+    
+    query = LocalWeather.where(created_at: start_time..end_time)
 
     query = query.where(sensor_id: sensor_id) if sensor_id
     local_weathers = query.order(created_at: :desc)

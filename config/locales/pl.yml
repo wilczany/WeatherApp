@@ -1,0 +1,9 @@
+pl:
+  enums:
+    sensor:
+      location:
+        inside: "Wewnątrz"
+        outside: "Na zewnątrz"
+      state:
+        on: "Włączony"
+        off: "Wyłączony"

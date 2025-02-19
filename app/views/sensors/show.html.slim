@@ -3,54 +3,28 @@
 		section.hero.is-primary
 			.hero-body
 				p.title
-					= @sensor.name.capitalize
-					/ = @sensor.location
-				
+					= @sensor.name.capitalize		
 		br
 		.box
 			table.table.is-fullwidth
 				tbody
-					tr
-						td
-							strong Nazwa:
-						td
-							= @sensor.name.capitalize
-					tr
-						td
-							strong Lokalizacja:
-						td
-							= @sensor.location
-					tr 
-						td 
-							strong Stan 
-						td
-							= @sensor.state
-					tr 
-						td 
-							strong Częstotliwość:
-						td
-							= @sensor.frequency
-					- if @latest.present?
-						tr 
-							td
-								strong Ostatnie pomiary:
-							td 
-								= @latest.created_at.strftime("%d-%m-%Y %k:%M")
-						tr
-							td 
-								strong Temperatura:
-							td
-								= @latest.temperature
-						tr
-							td 
-								strong Wilgotność:
-							td
-								= @latest.humidity
-						tr
-							td 
-								strong Ciśnienie:
-							td
-								= @latest.pressure
+					- [\
+					["Nazwa:", @sensor.name.capitalize],
+					["Lokalizacja:", @sensor.translated_location],
+					["Stan", @sensor.translated_state],
+					["Częstotliwość:", @sensor.frequency],
+					*(@latest ? [ \
+					["Ostatnie pomiary:", @latest.created_at.strftime("%d-%m-%Y %k:%M")],
+					["Temperatura:", @latest.temperature],
+					["Wilgotność:", @latest.humidity],
+					["Ciśnienie:", @latest.pressure] ] : []) \
+					].each do |label, value|
+						- if value.present?
+							tr
+								td
+									strong = label
+								td
+									= value
 								
 			= link_to 'Edytuj', edit_sensor_path(@sensor), class: 'button is-primary'
 
@@ -58,26 +32,36 @@
 	.column
 		
 		= form_with url: sensor_path, method: :get, class: "is-flex", data: { turbo: true } do |f|
-			.control
-			= f.number_field :minutes_ago, 
-				value: @time,
-				min: 1, 
-				max: 1440, 
-				placeholder: "Dane z zakresu w minutach",
-				class: "input"
-			.control
-			= f.datetime_select :start_time, 
-				value: @start_time,
-				class: "input"
-				min: 0.days.ago
-			= f.button "Zaktualizuj zakres", 
-				class: "button is-info"
+
+			.columns
+				.column 
+					.field.is-horizontal
+						.field-label.is-normal
+							= f.label :start_time, "Od", class: "label"
+						.field-body
+							.field
+								.control
+									= f.datetime_field :start_time, 
+										value: @start_time,
+										class: "input"
+										min: 0.days.ago
+				.column
+					.field.is-horizontal
+						.field-label.is-normal
+							= f.label :end_time, "Do", class: "label"
+						.field-body
+							.field
+								.control
+									= f.datetime_field :end_time, 
+											value: @end_time,
+											class: "input"
+											min: 0.days.ago
+				.column
+					.field
+						.control					
+							= f.submit "Zaktualizuj zakres", 
+								class: "button is-info"
+		
+
 		= turbo_frame_tag "weather_charts_frame" do
 			= render "shared/weather_charts", @data
-
-		/ .box.my-2
-		/ 	= line_chart @temperature_data
-		/ .box.my-2
-		/ 	= line_chart @humidity_data
-		/ .box.my-2
-		/ 	= line_chart @pressure_data, min: nil, max: nil

@@ -3,7 +3,7 @@ require "net/http"
 class PagesController < ApplicationController
   def home
     # @local_weathers = LocalWeather.order(created_at: :desc).first(18).group_by(&:sensor_id)
-    @time = params[:minutes_ago]&.to_i|| 15
+    @time = params[:minutes_ago]&.to_i|| 30
     minutes_ago = @time.minutes.ago
     @local_weathers = LocalWeather.where("created_at >= ?", minutes_ago).order(created_at: :desc).group_by(&:sensor_id)
     unless @local_weathers.empty?

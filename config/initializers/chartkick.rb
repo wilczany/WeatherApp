@@ -13,12 +13,12 @@ Chartkick.options = {
     xAxis: {
       type: "datetime",
       labels: {
-        format: "{value:%H:%M}"
+        format: "{value:%d %m %y - %H:%M}"
       }
     },
     tooltip: {
-      xDateFormat: "%H:%M",
-      pointFormat: "{series.name}: {point.y}<br/>Time: {point.x:%H:%M}"
+      xDateFormat: "%d %m %y - %H:%M",
+      pointFormat: "{series.name}: {point.y}"
 
     }
   }
