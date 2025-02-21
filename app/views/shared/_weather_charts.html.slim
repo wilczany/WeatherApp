@@ -1,10 +1,12 @@
-- if local_weathers.present?
-  .box.p-2
-    = line_chart temperature_data, min: temperature_min_max[0], max: temperature_min_max[1], title: "Temperatura"
-  .box.my-4
-    = line_chart humidity_data, min: humidity_min_max[0], max: humidity_min_max[1], title: "Wilgotność"
-  .box.my-4
-    = line_chart pressure_data, min: pressure_min_max[0], max: pressure_min_max[1], title: "Ciśnienie"
-- else
-  .notification 
-    strong Brak danych pomiarowych
+
+= turbo_frame_tag "weather_charts_frame" do
+  - if local_weathers.present?
+    .box.p-2
+      = line_chart temperature_data, min: temperature_min_max[0], max: temperature_min_max[1], title: "Temperatura"
+    .box.my-4
+      = line_chart humidity_data, min: humidity_min_max[0], max: humidity_min_max[1], title: "Wilgotność"
+    .box.my-4
+      = line_chart pressure_data, min: pressure_min_max[0], max: pressure_min_max[1], title: "Ciśnienie"
+  - else
+    .notification 
+      strong Brak danych pomiarowych

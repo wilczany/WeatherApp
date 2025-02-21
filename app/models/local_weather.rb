@@ -27,6 +27,6 @@ class LocalWeather < ApplicationRecord
     broadcast_replace_to "weather_charts_all",
       target: "weather_charts_frame",
       partial: "shared/weather_charts",
-      locals: self.charts_data
+      locals: LocalWeather.charts_data
   end
 end
