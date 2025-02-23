@@ -7,7 +7,7 @@ class ForecastService
     api_key = Rails.application.credentials.user.weather_api_key
     uri = URI(
       "http://api.weatherapi.com/v1/forecast.json?key=\
-      #{api_key}&q=#{city}&days=3&aqi=no&alerts=no"
+      #{api_key}&q=#{city}&days=3&aqi=no&alerts=no&lang=pl1"
     )
 
     begin

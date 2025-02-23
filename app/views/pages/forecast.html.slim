@@ -51,7 +51,7 @@ section.section
             
               .column.is-6
                 .notification.is-info
-                  p.heading Last Updated
+                  p.heading Ostatni pomiar
                   p.title.is-4 = "#{@current_weather[:last_updated]}"
 
       / Prognoza
@@ -71,22 +71,23 @@ section.section
               .mt-4
                 .columns.is-mobile
                   .column.is-6
-                    p.heading High
+                    p.heading Najwyższa
                     p.title.is-5 = "#{forecast[:max_temp]}°C"
                   .column.is-6
-                    p.heading Low
+                    p.heading Najniższa
                     p.title.is-5 = "#{forecast[:min_temp]}°C"
             
               .mt-3
                 .level.is-mobile
                   .level-item.has-text-centered
                     div
-                      p.heading Wind
+                      p.heading Wiatr
                       p.is-size-6 = "#{forecast[:max_wind]} km/h"
                   .level-item.has-text-centered
                     div
-                      p.heading Rain
+                      p.heading Opady
                       p.is-size-6 = "#{forecast[:chance_of_rain]}%"
                   .level-item.has-text-centered
                     div
-                      p.heading Humidity
+                      p.heading Wilgotność
+                      p.is-size-6 = "#{forecast[:humidity]}%"
