@@ -4,7 +4,7 @@ html data-theme="dark"
     title
     / == content_for(:title) || "Weather App" 
     meta[name="viewport" content="width=device-width,initial-scale=1"]
-    meta[name="apple-mobile-web-app-capable" content="yes"]
+    / meta[name="apple-mobile-web-app-capable" content="yes"]
     == csrf_meta_tags
     == csp_meta_tag 
 
@@ -13,7 +13,7 @@ html data-theme="dark"
     link[rel="manifest" href="/manifest.json"]
     link[rel="icon" href="/icon.png" type="image/png"]
     link[rel="icon" href="/icon.svg" type="image/svg xml"]
-    link[rel="apple-touch-icon" href="/icon.png"]
+    / link[rel="apple-touch-icon" href="/icon.png"]
     == stylesheet_link_tag "application", "data-turbo-track": "reload" 
     == javascript_include_tag "application", "data-turbo-track": "reload", type: "module"
     / == javascript_include_tag "//www.google.com/jsapi", "chartkick"
@@ -24,38 +24,8 @@ html data-theme="dark"
   .columns
     .column.is-one-fifth
       ==render 'shared/sidebar'
-      / == render 'shared/test'
 
-    / .container
     .column
       .box.m-4
         == yield 
     .column.is-1
-
-
-
-
-/ <!DOCTYPE html>
-/ <html>
-/   <head>
-/     <title><%= content_for(:title) || "Weather App" %></title>
-/     <meta name="viewport" content="width=device-width,initial-scale=1">
-/     <meta name="apple-mobile-web-app-capable" content="yes">
-/     <%= csrf_meta_tags %>
-/     <%= csp_meta_tag %>
-
-/     <%= yield :head %>
-
-/     <link rel="manifest" href="/manifest.json">
-/     <link rel="icon" href="/icon.png" type="image/png">
-/     <link rel="icon" href="/icon.svg" type="image/svg+xml">
-/     <link rel="apple-touch-icon" href="/icon.png">
-/     <%= stylesheet_link_tag "application", "data-turbo-track": "reload" %>
-/     <%= javascript_include_tag "application", "data-turbo-track": "reload", type: "module" %>
-/   </head>
-
-/   <body>
-/     <%= render 'shared/sidebar'%>
-/     <%= yield %>
-/   </body>
-/ </html>

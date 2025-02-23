@@ -22,7 +22,6 @@ scheduler.every "2m" do
 
     response = http.request(request)
     puts "Sensor #{sensor}: #{response.body}"
-    
   end
 end
 scheduler.join

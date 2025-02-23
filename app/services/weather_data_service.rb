@@ -4,7 +4,7 @@ class WeatherDataService
     query = query.where(sensor_id: sensor_id) if sensor_id
     local_weathers = query.order(created_at: :desc).group_by(&:sensor_id)
 
-    return {local_weathers: nil} if local_weathers.empty?
+    return { local_weathers: nil } if local_weathers.empty?
 
     {
       local_weathers: local_weathers,
@@ -30,6 +30,6 @@ class WeatherDataService
 
   def self.calculate_min_max(data_type, grouped_reading, diff = 2)
     global = grouped_reading.values.flatten.map(&data_type).compact
-    [global.min - diff, global.max + diff]
+    [ global.min - diff, global.max + diff ]
   end
 end

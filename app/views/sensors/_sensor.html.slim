@@ -3,22 +3,23 @@
         article.message class=("is-#{sensor.on? ? 'success' : 'danger'}")
             .message-header
                 p Czujnik: #{ sensor.name}
-                p = sensor.location.capitalize
+                p = sensor.translated_location
             .message-body
                 .level 
                     - if sensor.on?
+                        - latest = sensor.latest_weather
                         .level-item.has-text-centered
                             p
                                 | Temperatura:
                                 br
-                                strong #{sensor.latest_weather.temperature}°C
+                                strong #{latest.temperature}°C
                         .level-item.has-text-centered
                             p
                                 | Ciśnienie:
                                 br
-                                strong #{sensor.latest_weather.pressure}hPa
+                                strong #{latest.pressure}hPa
                         .level-item.has-text-centered
                             p
                                 | Wilgotność:
                                 br
-                                strong #{sensor.latest_weather.humidity}
+                                strong #{latest.humidity} %

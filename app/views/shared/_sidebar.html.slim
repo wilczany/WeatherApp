@@ -3,7 +3,7 @@
         p.menu-label WeatherApp
         ul.menu-list
             li
-                a.[href="/", class="#{'is-active' if action_name == 'home'}"] Strona główna
+                a.[href="/", class="#{'is-active' if controller_name == 'local_weathers'}"] Strona główna
             li
                 a[href="/sensors", class="#{'is-active' if controller_name == 'sensors'}"] Czujniki
             li 
@@ -12,12 +12,3 @@
                 button.button.is-small.is-light.is-fullwidth[
                     data-controller="toggle-theme" data-action="click->toggle-theme#change"
                     ] Toggle Theme 
-
-/ nav.navbar.is-vertical
-/     .navbar-menu
-/         .navbar-item
-/             | xd
-/         .navbar-item
-/             | lool
-
-        

@@ -6,7 +6,7 @@ class SensorsController < ApplicationController
     def show
         @sensor = Sensor.find(params[:id])
         @latest = @sensor.latest_weather
-   
+
         if params[:start_time].present? && params[:end_time].present?
             start_time = Time.zone.parse(params[:start_time])
             end_time = Time.zone.parse(params[:end_time])
@@ -22,7 +22,7 @@ class SensorsController < ApplicationController
         end
         data = data.to_json
 
-        # ale nabroiłeś saku
+        # zmniejszone zostały nagłówki odpowiedzi ze względu na ograniczenia sprzętowe związane z odczytem
 
         response.headers.clear
 
@@ -36,7 +36,7 @@ class SensorsController < ApplicationController
     def update
         @sensor = Sensor.find(params[:id])
         if @sensor.update(sensor_params)
-            redirect_to @sensor, notice: "Sensor was successfully updated."
+            redirect_to @sensor
         else
             render :edit
         end

@@ -1,18 +1,2 @@
-/ .field.has-addons.mb-4
-/   = form_with url: root_path, method: :get, class: "is-flex", data: { turbo: true } do |f|
-/     .control
-/       = f.number_field :minutes_ago, 
-/         value: @time, 
-/         min: 1, 
-/         max: 1440, 
-/         class: "input"
-/     .control
-/       = f.button "Update Range", 
-/         class: "button is-info"
-        
-
 = turbo_stream_from 'weather_charts_all'
 = render "shared/weather_charts", @data
-
-
-
