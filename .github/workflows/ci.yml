@@ -67,10 +67,6 @@ jobs:
         with:
           bun-version: 1.1.30
 
-      - name: Set up database configuration
-        run: |
-          cp config/database.yml.ci config/database.yml
-
       - name: Run tests
         env:
           RAILS_ENV: test
