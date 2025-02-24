@@ -11,4 +11,3 @@ frequency = 60
 Sensor.find_or_create_by!(name: 'czujnik1', location: :inside, state: :off, frequency: frequency)
 Sensor.find_or_create_by!(name: 'czujnik2', location: :outside, state: :off, frequency: frequency)
 Sensor.find_or_create_by!(name: 'czujnik3', location: :outside, state: :off, frequency: frequency)
-
